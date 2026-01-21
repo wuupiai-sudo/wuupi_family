@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wuupi – Descubrimiento</title>
+
+<style>
+:root{
+  --primary:#0c4a6e;
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --border:#e2e8f0;
+  --text:#1f2933;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+.container{
+  max-width:820px;
+  margin:auto;
+  padding:20px;
+}
+h1,h2{text-align:center;color:var(--primary)}
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:22px;
+  margin-bottom:24px;
+}
+.question{margin-bottom:22px}
+label{
+  display:block;
+  padding:10px 12px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  margin-bottom:8px;
+  cursor:pointer;
+}
+input{margin-right:10px;accent-color:var(--primary)}
+.section{display:none}
+button{
+  width:100%;
+  padding:14px;
+  background:var(--primary);
+  color:#fff;
+  border:none;
+  border-radius:12px;
+  font-size:1rem;
+  cursor:pointer;
+}
+textarea{
+  width:100%;
+  min-height:80px;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid var(--border);
+}
+#thankYou{display:none;text-align:center}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<!-- FORMULARIO -->
+<div id="formWrapper">
+
+<h1>Wuupi</h1>
+<p style="text-align:center">Piensa en un día normal con tu hijo/a</p>
+
+<form
+  id="wuupiForm"
+  action="https://script.google.com/macros/s/AKfycbxCaxdEESdTs8QL6KIlj_C8lYHkCP1VfiuimnQZiW3zRaGHoGSgod3MO0GIHQ7ge6BJfQ/exec"
+  method="POST"
+  target="hidden_iframe"
+  onsubmit="return false;"
+>
+
+<div class="card">
+<h2>¿En qué momento del día te gustaría que fuera más fácil?</h2>
+<label><input type="radio" name="root_choice" value="jugar" required> Al jugar</label>
+<label><input type="radio" name="root_choice" value="aprender"> Al aprender cosas nuevas</label>
+<label><input type="radio" name="root_choice" value="comunicarse"> Al comunicarse</label>
+<label><input type="radio" name="root_choice" value="moverse"> Al moverse</label>
+<label><input type="radio" name="root_choice" value="convivir"> Al convivir con otros</label>
+<label><input type="radio" name="root_choice" value="solo"> Al estar solo/a en casa</label>
+</div>
+
+<!-- JUGAR -->
+<div id="jugar" class="section">
+<div class="card">
+<h2>Al jugar</h2>
+<div class="question">
+<label><input type="radio" name="play_difficulty" value="Se frustra"> Se frustra</label>
+<label><input type="radio" name="play_difficulty" value="No participa"> No puede participar</label>
+<label><input type="radio" name="play_difficulty" value="Se cansa"> Se cansa rápido</label>
+<label><input type="radio" name="play_difficulty" value="Ayuda constante"> Necesita ayuda constante</label>
+</div>
+<div class="question">
+<strong>Si jugar fuera más fácil, ¿qué cambiaría en casa?</strong>
+<textarea name="play_change"></textarea>
+</div>
+</div>
+</div>
+
+<!-- APRENDER -->
+<div id="aprender" class="section">
+<div class="card">
+<h2>Al aprender</h2>
+<label><input type="radio" name="learn_worry" value="No se interesa"> No se interesa</label>
+<label><input type="radio" name="learn_worry" value="Se frustra"> Se frustra</label>
+<label><input type="radio" name="learn_worry" value="No avanza"> No avanza</label>
+<label><input type="radio" name="learn_worry" value="No sé ayudarle"> No sabes cómo ayudarle</label>
+<textarea name="learn_goal" placeholder="¿Qué te gustaría que aprendiera?"></textarea>
+</div>
+</div>
+
+<!-- COMUNICARSE -->
+<div id="comunicarse" class="section">
+<div class="card">
+<h2>Al comunicarse</h2>
+<label><input type="radio" name="comm_level" value="Muy difícil"> Muy difícil</label>
+<label><input type="radio" name="comm_level" value="Difícil"> Difícil</label>
+<label><input type="radio" name="comm_level" value="A veces posible"> A veces posible</label>
+<label><input type="radio" name="comm_level" value="Generalmente posible"> Generalmente posible</label>
+<textarea name="comm_frustration" placeholder="¿Qué situación te genera más frustración?"></textarea>
+</div>
+</div>
+
+<button type="button" onclick="handleSubmit()">Enviar respuestas</button>
+</form>
+</div>
+
+<!-- THANK YOU -->
+<div id="thankYou">
+<h2>Gracias por compartir ❤️</h2>
+<p>Tu experiencia es muy valiosa.  
+Wuupi existe para entender y acompañar mejor realidades como la tuya.</p>
+</div>
+
+</div>
+
+<!-- IFRAME OCULTO -->
+<iframe name="hidden_iframe" style="display:none"></iframe>
+
+<script>
+document.querySelectorAll('input[name="root_choice"]').forEach(radio=>{
+  radio.addEventListener("change",()=>{
+    document.querySelectorAll(".section").forEach(s=>s.style.display="none");
+    document.getElementById(radio.value).style.display="block";
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+
+function handleSubmit(){
+  document.getElementById("formWrapper").style.display="none";
+  document.getElementById("thankYou").style.display="block";
+  document.getElementById("wuupiForm").submit();
+}
+</script>
+
+</body>
+</html>
